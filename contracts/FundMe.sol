@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: MIT
+// 1. pragma
 pragma solidity ^0.8.0;
 
+// 2. imports
 import "./PriceConverter.sol";
 
-error FuneMe__NotOwner();
+
+// 3. Interfaces, Libraries, Contracts, Errors
+error FundMe__NotOwner();
 
 /** @title A contract for crown funding
  *  @author Jaffar Totanji
@@ -11,21 +15,36 @@ error FuneMe__NotOwner();
  *  @dev This implements price feeds as our library
  */
 contract FundMe {
+    // Type Declarations
     using PriceConverter for uint256;
 
+    // State variables
     uint256 public constant MINIMUM_USD = 50 * 1e18;
     address public immutable i_owner;
     address[] public funders;
-    mapping(address => uint256) funderToAmount;
+    mapping(address => uint256) public funderToAmount;
     AggregatorV3Interface public priceFeed;
 
+    // Events (we have none!)
+
+    // Modifiers
     modifier onlyOwner() {
         //require(msg.sender == i_owner, "Sender is not owner!!!");
         if (msg.sender != i_owner) {
-            revert FuneMe__NotOwner();
+            revert FundMe__NotOwner();
         }
         _;
     }
+
+    // Functions Order:
+    //// constructor
+    //// receive
+    //// fallback
+    //// external
+    //// public
+    //// internal
+    //// private
+    //// view / pure
 
     constructor(address priceFeedAddress) {
         i_owner = msg.sender;
