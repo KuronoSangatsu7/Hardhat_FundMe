@@ -13,12 +13,15 @@ contract FundMe {
     address[] public funders;
     mapping(address => uint256) funderToAmount;
 
-    constructor (){
+    AggregatorV3Interface public priceFeed;
+
+    constructor (address priceFeedAddress){
         i_owner = msg.sender;
+        priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
     function fund() public payable {
-        require(msg.value.getConversionRate() > MINIMUM_USD, "too low");
+        require(msg.value.getConversionRate(priceFeed) > MINIMUM_USD, "too low");
         funders.push(msg.sender);
         funderToAmount[msg.sender] = msg.value;
     }
