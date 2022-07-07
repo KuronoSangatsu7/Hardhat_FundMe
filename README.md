@@ -7,6 +7,8 @@ Some smart contracts in the form of a Fund Me app for the purpose of testing the
 
 - **Blockchain**: `Solidity`, `Chainlink`.
 
+- **Hardhat**: `hardhat-etherscan`, `hardhat-gas-reporter`, `hardhat-deploy`, `solidity-coverage`
+
 ### Features:
 - Donate ETH to the contract.
 

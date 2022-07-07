@@ -1,5 +1,4 @@
-const { assert } = require("chai")
-const {done} = require("@nomiclabs/hardhat-waffle")
+const { assert, expect, done } = require("chai")
 const { network, ethers, getNamedAccounts, waffle } = require("hardhat")
 const { developmentChains } = require("../../helper-hardhat-config")
 
@@ -16,18 +15,18 @@ developmentChains.includes(network.name)
 
           it("allows people to fund and withdraw", async function () {
               const fundTx = await fundMe.fund({ value: sendValue })
-                await fundTx.wait(1)
+              await fundTx.wait(1)
 
-              const withdrawTx = await fundMe.withdraw();
-                await withdrawTx.wait(1)
+              const withdrawTx = await fundMe.withdraw()
+              await withdrawTx.wait(1)
 
-              const endingFundMeBalance = await fundMe.provider.getBalance(
+              let endingFundMeBalance = await fundMe.provider.getBalance(
                   fundMe.address
               )
-              console.log(
-                  endingFundMeBalance.toString() +
-                      " should equal 0, running assert equal..."
-              )
-              assert.equal(endingFundMeBalance.toString(), "0")
+
+              endingFundMeBalance = endingFundMeBalance.toString()
+              console.log(endingFundMeBalance)
+              console.log("here")
+              expect(endingFundMeBalance).to.equal("0")
           })
       })
